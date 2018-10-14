@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"gitmagi/golangtest/rollbackapicall/callmanagers"
 	"log"
-	"rollbackapicall/callmanagers"
 
 	"github.com/gogap/aop"
 )
@@ -53,7 +53,6 @@ func initialize() {
 func mainContainer() {
 	log.Println("MainContainer Starting")
 
-	//panic(errors.New("Errore fittizio"))
 	res := callBaseProxy.Method(new(callmanagers.CallBase).Echo).(func(string) string)("Ciao Mondo")
 	fmt.Println(res)
 
