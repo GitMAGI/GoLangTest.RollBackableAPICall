@@ -1,26 +1,23 @@
 package callmanagers
 
 import (
-	"errors"
+	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/gogap/aop"
 )
 
 type CallBase struct{}
 
-func (c *CallBase) Echo(var1 string) string {
-	//fmt.Println(" >>>", var1)
-
-	panic(errors.New("Errore interno"))
-
-	return var1
+func (c *CallBase) CallHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Base Method Call")
 }
 
 func (c *CallBase) Before(jp aop.JoinPointer) {
 	log.Println("Before Starting ...")
 
-	//fmt.Println(jp)
+	fmt.Println(jp)
 
 	log.Println("Before Completed")
 }
@@ -36,7 +33,10 @@ func (p *CallBase) Around(pjp aop.ProceedingJoinPointer) {
 
 	defer manageError()
 
-	ret := pjp.Proceed(pjp.Args()[0])
+	fmt.Println(pjp)
+
+	//ret := pjp.Proceed(pjp.Args()[0], &pjp.Args()[1])
+	ret := pjp.Proceed()
 	_ = ret
 
 	log.Println("Around Completed")
